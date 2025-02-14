@@ -1,0 +1,283 @@
+55EDØø<CK>øØACTIVOØø<HC>øØLT_20250114164605Øø<HC>øØ** PROPOSITO GENERAL **Øø<HC>øØLINEA   -- Prueba impresion SP 2.0Øø<HC>øØ****Øø<HC>øØ00Øø<HC>øØ015980000093','015780000002Øø<HC>øØ1Øø<HC>øØ0Øø<HC>øØ0Øø<HC>øØ1Øø<HF>øØELABELS.ETIQUETAS_TEMPLATESØø<IN>øØTEMPLATE_IDØø<IC>øØTYPE_INFOØø<IC>øØSEQØø<IC>øØF_ARCHIVOØø<IC>øØTEXTOØø<IT>øØLT_20250114164605Øø<CC>øØCLIENTEØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ** PROPOSITO GENERAL **Øø<CR>øØLT_20250114164605Øø<CC>øØCONFIGURACIONØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ0;0;1Øø<CR>øØLT_20250114164605Øø<CC>øØDESCRIPCIONØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØLINEA   -- Prueba impresion SP 2.0
+\\Valsf011\smtprd\Productos_Actuales\ABBOTT STELLATUS\600333305~~6003333057BS~~AWN\20.-ETIQUETADO\Flexlabel\Etiqueta Box Main
+Esta etiqueta se imprime atraves de Bartender.
+Øø<CR>øØLT_20250114164605Øø<CC>øØESTADOØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØACTIVOØø<CR>øØLT_20250114164605Øø<CC>øØFICHERO_IMAGENØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ00Øø<CR>øØLT_20250114164605Øø<CC>øØFORMULAS_PARAMETROSØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØØø<CR>øØLT_20250114164605Øø<CC>øØFORMULAS_VARIABLESØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØIF #USER#$ <> "JLOPEZC" THEN
+	EXIT
+END IF
+'
+'
+#REPEAT_MAIN#% = TRUE
+#NEXT_QTY_PRINT#% = 1
+#QTY_PRINT#% = 1
+'
+'
+Path_Bartender$ = "lib://Conversiones SP_20/"
+'Fichero_Bartender$ = "Prueba.btw"
+Fichero_Bartender$ = "Prueba_2.btw"
+Nonmbre_impresora$ = "\\VALW51074A\USB1"
+'
+Path_fichero_BTXML$ = "C:\CPCWIN\Etiqueta_bartender.xml"
+'
+'
+P_CODE$ = "3TA"
+#CONTADOR_SERIAL#% = 1
+'
+'
+'
+'*************** Datos de Fecha ***************************************************************************************************
+AÑO$ = YEAR(#DATE#$)
+SEMANA$ = FORMAT(YEARWEEK(#DATE#$),"00")
+MES_NUMERO$ = FORMAT(MONTH(#DATE#$),"00")
+MES_TEXTO$ = GET_ARRAY("JAN;FEB;MAR;APR;MAY;JUN;JUL;AUG;SEP;OCT;NOV;DEC",";",VAL(MONTH(#DATE#$))-1)
+DIA$ = FORMAT(DAY(#DATE#$),"00")
+'
+'
+'*************** Se consulta los datos de la etiqueta que han sido configurados el la aplicación CardList ***********************
+CONSULTA_1$ = SQL("SELECT ETIQUETA,PARTNUMBER,PN_CLIENTE,CLIENTE,ECETIQUETA,PCODEREV,BLQ_ETIQ FROM ELABELS.ALL_PRODUCTOS WHERE PARTCODE='" & P_CODE$ & "'","ELAB_PR")
+IF COUNT_RECORD(CONSULTA_1$) <> 1 THEN
+	MSGBOX "El partcode " & P_CODE$ & " , no se encuentra o tiene mas de un registro en ELABELS.ALL_PRODUCTOS"
+	EXIT
+END IF
+MODELO_ETIQUETA$ = GET_RECORD_FIELD(CONSULTA_1$,1,1)
+PARTNUMBER$ = GET_RECORD_FIELD(CONSULTA_1$,1,2)
+PN_CLIENTE$ = GET_RECORD_FIELD(CONSULTA_1$,1,3)
+CLIENTE$ = GET_RECORD_FIELD(CONSULTA_1$,1,4)
+REVISION_EC$ = GET_RECORD_FIELD(CONSULTA_1$,1,5)
+PREFIJO$ = GET_RECORD_FIELD(CONSULTA_1$,1,6)
+BLOQUEO$ = GET_RECORD_FIELD(CONSULTA_1$,1,7)
+'
+'*********************************************************************************************************************************
+'
+'
+'
+'
+'
+'
+'
+'
+IF #PREVIOUS_INFO#% = FALSE THEN
+	'
+	'
+	IF #CONTADOR_REPEAT_MAIN#% > 0 THEN
+		'****************************************************************************************************
+		'*********************** Mensaje Imprimiendo ********************************************************
+		'****************************************************************************************************
+		'
+		COLOR_TEXTO% =  RGB(255,255,255)
+		COLOR_FORMULARIO% =  RGB(0,0,0)
+		'
+		FORM (OPEN,50,20,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+		FORM (SHOW_LABEL,1,8,5,"IMPRIMIENDO ETIQUETA",,16,COLOR_TEXTO%)
+		FORM (START_TIMER,1,5000) 
+		FORM (DISPLAY_UNTIL,TIMER_1,)
+		FORM (STOP_TIMER,1)
+		FORM (CLOSE)
+		'
+	END IF
+	'
+	' 
+	'****************************************************************************************************
+	'****************************************************************************************************
+	'********** Introducimos la cantidad de serials *****************************************************
+	'****************************************************************************************************
+	'****************************************************************************************************
+	'
+	FORMULARIO_0:
+	'
+	COLOR_TEXTO% =  RGB(0,0,0)
+	COLOR_FORMULARIO% =  RGB(226,242,111)
+	QTY$ = "1"
+	'
+	FORM (OPEN,100,35,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+	FORM (SHOW_LABEL,1,1,1,"Introducir cantidad a imprimir:",,16,COLOR_TEXTO%)
+	FORM (SHOW_TEXT,1,25,10,50,4,QTY$,,16,,"QTY$")
+	FORM (SHOW_BUTTOM,1,42,20,15,5,"ACEPTAR","Arial",12,)
+	FORM (DISPLAY_UNTIL,BUTTOM_1;TEXT_1,TEXT_1)
+	FORM (CLOSE) 
+	'
+	QTY$ = TRIM(QTY$)
+	IF (ISNUMERIC(QTY$) = TRUE) AND (INSTR(QTY$,".") = 0) AND (INSTR(QTY$,",") = 0) THEN
+		QTY% = VAL(QTY$)
+	ELSE
+		MSGBOX "La cantida introducida no es correcta." 
+		GOTO FORMULARIO_0
+	END IF
+	IF QTY% = 0 THEN
+		MSGBOX "La cantidad introducida debe ser mayor de 0." 
+		GOTO FORMULARIO_0
+	END IF
+	IF QTY% > 200 THEN
+		MSGBOX "La cantidad introducida no puede ser mayor de 200." 
+		GOTO FORMULARIO_0
+	END IF
+	'
+	'
+	NUMERO_DIGITOS$ = "000000"
+	#SERIAL_CUST#$ = PREFIJO$ & P_CODE$ & FORMAT(RIGHT(STR(#CONTADOR_SERIAL#%),LEN(NUMERO_DIGITOS$)),NUMERO_DIGITOS$)
+	'
+	'Partnumber , Serial number y EC
+	PN$ = PARTNUMBER$
+	SN$ = #SERIAL_CUST#$
+	EC$ = REVISION_EC$
+	
+	'Fecha desglosada
+	Y4$ = AÑO$
+	Y2$ = RIGHT(AÑO$,2)
+	WW$ = SEMANA$
+	MN$ = MES_NUMERO$
+	MT$ = MES_TEXTO$
+	DD$ = DIA$
+	
+	'Serial desglosado
+	PR$ = PREFIJO$
+	PC$ = P_CODE$
+	Y1$ = RIGHT(AÑO$,1)
+	C7$ = RIGHT(#SERIAL_CUST#$,7)
+	C5$ = RIGHT(#SERIAL_CUST#$,5)
+	C4$ = RIGHT(#SERIAL_CUST#$,4)
+	
+	'Partnumber desglosado en dos partes, solo para el modelo 2D-23X6X3 y HW-2D10X6
+	P1$ = LEFT(PARTNUMBER$,((LEN(PARTNUMBER$))\2))
+	P2$ = RIGHT(PARTNUMBER$,((LEN(PARTNUMBER$))\2) + ((LEN(PARTNUMBER$)) MOD 2))
+	'
+	'	
+	'	
+	'
+	'	
+	' 
+	'***************************************************************************************************************************************************
+	'************ Para imprimir con Bartender hay que generar el siguiente fichero XML y lanzar un comando CURL atraves de la funcion SHELL ************  
+	'***************************************************************************************************************************************************
+	'
+	DELETE_FILE (Path_fichero_BTXML$)
+	
+	GOTO FICHERO_2
+	
+	'
+	'
+	Contenido_BTXML$ =                              "<?xml version='''1.0''' encoding='''utf-8'''?>" 
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "<XMLScript Version='''2.0'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "	<Command Name='''Job1'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "		<Print>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<Format>" & Path_Bartender$ & Fichero_Bartender$ & "</Format>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''SN$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & SN$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''PN$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & PN$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''EC$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & EC$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''Y4$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & Y4$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''Y2$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & Y2$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''WW$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & WW$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''MN$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & MN$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''MT$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & MT$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''PR$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & PR$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''DD$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & DD$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''PC$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & PC$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''Y1$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & Y1$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''C7$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & C7$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''C5$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & C5$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''C4$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & C4$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''P1$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & P1$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<NamedSubString Name='''P2$'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Value>" & P2$ & "</Value>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</NamedSubString>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<PrintSetup>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Printer>" & Nonmbre_impresora$ & "</Printer>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</PrintSetup>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "		</Print>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "	</Command>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "</XMLScript>"
+	'
+
+
+	GOTO FIN_BTXML
+	
+	
+	FICHERO_2:
+						
+												
+	Contenido_BTXML$ =                              "<?xml version='''1.0''' encoding='''utf-8'''?>" 
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "<XMLScript Version='''2.0'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "	<Command Name='''Job1'''>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "		<Print>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<Format>" & Path_Bartender$ & Fichero_Bartender$ & "</Format>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<RecordSet Name='''Parametros_SN_Celestica''' Type='''btTextFile'''>"
+'	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Delimitation>btDelimCustom</Delimitation>"
+'	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<FieldDelimiter>;</FieldDelimiter>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Delimitation>btDelimQuoteAndComma</Delimitation>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<NumberOfFields>17</NumberOfFields>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<UseFieldNamesFromFirstRecord>true</UseFieldNamesFromFirstRecord>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<TextData>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "					<![CDATA["	
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "					'''SN$''','''PN$''','''EC$''','''Y4$''','''Y2$''','''WW$''','''MN$''','''MT$''','''PR$''','''DD$''','''PC$''','''Y1$''','''C7$''','''C5$''','''C4$''','''P1$''','''P2$'''"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "					'''" & SN$ & "''','''" & PN$ & "''','''" & EC$ & "''','''" & Y4$ & "''','''" & Y2$ & "''','''" & WW$ & "''','''" & MN$ & "''','''" & MT$ & "''','''" & PR$ & "''','''" & DD$ & "''','''" & PC$ & "''','''" & Y1$ & "''','''" & C7$ & "''','''" & C5$ & "''','''" & C4$ & "''','''" & P1$ & "''','''" & P2$ & "'''"			
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "					'''" & SN$ & "''','''" & PN$ & "''','''" & EC$ & "''','''" & Y4$ & "''','''" & Y2$ & "''','''" & WW$ & "''','''" & MN$ & "''','''" & MT$ & "''','''" & PR$ & "''','''" & DD$ & "''','''" & PC$ & "''','''" & Y1$ & "''','''" & C7$ & "''','''" & C5$ & "''','''" & C4$ & "''','''" & P1$ & "''','''" & P2$ & "'''"			
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "					]]>"			
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				</TextData>"			
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</RecordSet>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			<PrintSetup>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "				<Printer>" & Nonmbre_impresora$ & "</Printer>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "			</PrintSetup>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "		</Print>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "	</Command>"
+	Contenido_BTXML$ = Contenido_BTXML$ & CHR(10) & "</XMLScript>"
+
+
+	FIN_BTXML:
+
+
+	CREATE_FILE (Contenido_BTXML$,Path_fichero_BTXML$)
+	'
+	SHELL ("curl --silent -k -X POST '''http://VALSF004/Integration/WebServiceIntegration/Execute''' -H '''Content-Type: text/plain''' --data @" & Path_fichero_BTXML$,4)
+	'
+	'***************************************************************************************************************************************************
+	'***************************************************************************************************************************************************
+	'***************************************************************************************************************************************************
+	'
+	'
+END IF
+'
+'
+'
+'Øø<CR>øØLT_20250114164605Øø<CC>øØIMPRESORASØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ|~|~|BEGIN_PRINTER|~|~|1|~|~|015980000093|~|~|015780000002|~|~|C:\CPCWIN\PRINTER_DUMMY.TXTØø<CR>øØLT_20250114164605Øø<CC>øØPARCODE_ASOCIACIONØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ"****"Øø<CR>øØLT_20250114164605Øø<CC>øØTEMPLATE_CODESOFTØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ|~|~|BEGIN_FILE_PRINT|~|~|F01|~|~|ZEBRA|~|~|1|~|~|1|~|~|^XA
+^MCY
+^XZ
+^XA
+^XFR:TEMP_FMT.ZPL
+^A0N,30,30^FO50,30^FDLINE1$^FS
+^PQ1,0,1,Y
+^XZ
+^XA
+^IDR:TEMP_FMT.ZPL
+^XZ
+Øø<CT>øØØø<CT>øØØø<CT>øØELABELS.ETIQUETAS_CONSUMIBLESØø<IN>øØPN_CONSUMIBLEØø<IC>øØTYPE_INFOØø<IC>øØSEQØø<IC>øØTYPE_PNØø<IC>øØF_ARCHIVOØø<IC>øØTEXTOØø<IT>øØ015980000093Øø<CC>øØDESCRIPCIONØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØColor BlancoØø<CR>øØ015980000093Øø<CC>øØDESCRIPCIONØø<CC>øØ1Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØBRADY THT-2-727-10Øø<CR>øØ015980000093Øø<CC>øØDESCRIPCIONØø<CC>øØ2Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØPolyimida (B727)Øø<CR>øØ015980000093Øø<CC>øØANCHO_ROLLOØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØ85.4Øø<CR>øØ015980000093Øø<CC>øØANCHO_ETIQUETAØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØ22.86Øø<CR>øØ015980000093Øø<CC>øØALTO_ETIQUETAØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØ6.35Øø<CR>øØ015980000093Øø<CC>øØCOLUMNAS_ETIQUETAØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØ3Øø<CR>øØ015780000002Øø<CC>øØANCHO_ROLLOØø<CC>øØ0Øø<CC>øØRIBBONØø<CC>øØ2Øø<CC>øØ83.06Øø<CR>øØ015780000002Øø<CC>øØLONGITUD_ROLLOØø<CC>øØ0Øø<CC>øØRIBBONØø<CC>øØ2Øø<CC>øØ300Øø<CR>øØ015780000002Øø<CC>øØDESCRIPCIONØø<CC>øØ0Øø<CC>øØRIBBONØø<CC>øØ2Øø<CC>øØBRADY R6002Øø<CR>øØ015780000002Øø<CC>øØDESCRIPCIONØø<CC>øØ1Øø<CC>øØRIBBONØø<CC>øØ2Øø<CC>øØPara etiquetas de polyiamida, execpto color ambar.

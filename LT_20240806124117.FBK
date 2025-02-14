@@ -1,0 +1,607 @@
+BC5EØø<CK>øØACTIVOØø<HC>øØLT_20240806124117Øø<HC>øØABBOTT STELLATUSØø<HC>øØPACKING -- Pesaje BOX.Øø<HC>øØAWOØø<HC>øØ00Øø<HC>øØN/A','N / AØø<HC>øØ1Øø<HC>øØ0Øø<HC>øØ0Øø<HC>øØ1Øø<HF>øØELABELS.ETIQUETAS_TEMPLATESØø<IN>øØTEMPLATE_IDØø<IC>øØTYPE_INFOØø<IC>øØSEQØø<IC>øØF_ARCHIVOØø<IC>øØTEXTOØø<IT>øØLT_20240806124117Øø<CC>øØCLIENTEØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØABBOTT STELLATUSØø<CR>øØLT_20240806124117Øø<CC>øØCONFIGURACIONØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ0;0;1Øø<CR>øØLT_20240806124117Øø<CC>øØDESCRIPCIONØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØPACKING -- Pesaje BOX.
+\\Valsf011\smtprd\Productos_Actuales\ABBOTT STELLATUS\600333304~~6003333047BS~~AWO\20.-ETIQUETADO\Flexlabel\Etiqueta BOX
+
+Este JOB necesita que se este ejecutanado en el computador donde esta la bascula la aplicacion Balanza_interface.exe
+Øø<CR>øØLT_20240806124117Øø<CC>øØESTADOØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØACTIVOØø<CR>øØLT_20240806124117Øø<CC>øØFICHERO_IMAGENØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ00Øø<CR>øØLT_20240806124117Øø<CC>øØFORMULAS_PARAMETROSØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ#SERIAL_CUST#$ = SERIAL_CELESTICA$Øø<CR>øØLT_20240806124117Øø<CC>øØFORMULAS_VARIABLESØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ#QTY_PRINT#% = 1
+#NEXT_QTY_PRINT#% = 1
+#REPEAT_MAIN#% = 1
+'
+'
+'
+#LOG_VARIOUS_DATA#$ = ""
+#LOG_REASON_REPRINT#$ = ""
+ETIQUETA_DUPLICADA% = FALSE
+'
+#TRAZ_RIBBON_ACTIVED#% = FALSE
+#TRAZ_LABEL_ACTIVED#% = FALSE
+'
+'
+LISTA_USUARIO_AUTORIZADO_PRINT$ = "JLOPEZC,ACRESPO,VCALAFO,RAMOSP,JMANES,MTORRENT,CRUBIRA,FJMMARTI,MONERA,RLGARCI,HUERTAM,MBARGUE,RMRUIZ,ES04080118,ES62024240"
+LISTA_USUARIO_AUTORIZADO_REPRINT$ = "JLOPEZC,ACRESPO,VCALAFO,RAMOSP,JMANES,MTORRENT,CRUBIRA,FJMMARTI,MONERA,RLGARCI,HUERTAM,MBARGUE,JTAMARIT,ES04080118,ES04072369,RMRUIZ,ES62024240"
+'
+ACTIVAR_RESTRICCION_AUTORIZADO_PRINT% = FALSE
+ACTIVAR_RESTRICCION_AUTORIZADO_REPRINT% = TRUE
+'
+'
+IF ACTIVAR_RESTRICCION_AUTORIZADO_PRINT% = TRUE THEN
+	IF INSTR(("," & TRIM(UCASE(LISTA_USUARIO_AUTORIZADO_PRINT$)) & ","), ("," &  #USER#$ & ",")) = 0 THEN		
+		MSGBOX "El usuario " & #USER#$ & " no esta autorizado para ejecutar este JOB."
+		EXIT
+	END IF			
+END IF
+'
+OPERACION_PREVIA$ = "0328"
+'
+'
+'
+'
+'
+'
+'
+'
+'****************************************************************************************************************************************
+'********************** CONFIGURACION PESAJE DE LA BASCULA  *****************************************************************************
+'****************************************************************************************************************************************
+'
+FICHERO_INTERCAMBIO$ = "C:\CPCWIN\BASCULA.SWP"
+'
+SELECT CASE #PART_CODE#$
+CASE "AWO"
+	'
+	LIMITE_SUPERIOR_CAJA_VACIA% = 0
+	LIMITE_INFERIOR_CAJA_VACIA% = 0
+	'
+	LIMITE_SUPERIOR_PESO_NETO_0% = 1360.0
+	LIMITE_INFERIOR_PESO_NETO_0% = 1330.0
+	'
+	LIMITE_SUPERIOR_PESO_NETO_1% = 0
+	LIMITE_INFERIOR_PESO_NETO_1% = 0
+	'
+	LIMITE_SUPERIOR_PESO_NETO_2% = 0
+	LIMITE_INFERIOR_PESO_NETO_2% = 0
+	'
+	LIMITE_SUPERIOR_PESO_NETO_3% = 0
+	LIMITE_INFERIOR_PESO_NETO_3% = 0
+	'
+	LIMITE_SUPERIOR_PESO_NETO_4% = 0
+	LIMITE_INFERIOR_PESO_NETO_4% = 0
+	'
+	'
+	TEXTO_PESAJE_CAJA_LINE1$ = "Pesar los siguientes articulos de cartón:"
+	TEXTO_PESAJE_CAJA_LINE2$ = "1º - Caja de carton principal."
+	TEXTO_PESAJE_CAJA_LINE3$ = "-"
+	TEXTO_PESAJE_CAJA_LINE4$ = "-"
+	TEXTO_PESAJE_CAJA_LINE5$ = "y presiona print en la bascula."
+	'
+	TEXTO_PESAJE_0_LINE1$ = "Pesar el producto completo:"
+	TEXTO_PESAJE_0_LINE2$ = "-"
+	TEXTO_PESAJE_0_LINE3$ = "-"
+	TEXTO_PESAJE_0_LINE4$ = "-"
+	TEXTO_PESAJE_0_LINE5$ = "y presiona print en la bascula."
+	'
+	TEXTO_PESAJE_1_LINE1$ = "Pesada de reserva"
+	TEXTO_PESAJE_1_LINE2$ = "-"
+	TEXTO_PESAJE_1_LINE3$ = "-"
+	TEXTO_PESAJE_1_LINE4$ = "-"
+	TEXTO_PESAJE_1_LINE5$ = "y presiona print en la bascula."
+	'
+	TEXTO_PESAJE_2_LINE1$ = "Pesada de reserva"
+	TEXTO_PESAJE_2_LINE2$ = "-"
+	TEXTO_PESAJE_2_LINE3$ = "-"
+	TEXTO_PESAJE_2_LINE4$ = "-"
+	TEXTO_PESAJE_2_LINE5$ = "y presiona print en la bascula."
+	'
+	TEXTO_PESAJE_3_LINE1$ = "Pesada de reserva"
+	TEXTO_PESAJE_3_LINE2$ = "-"
+	TEXTO_PESAJE_3_LINE3$ = "-"
+	TEXTO_PESAJE_3_LINE4$ = "-"
+	TEXTO_PESAJE_3_LINE5$ = "y presiona print en la bascula."
+	'	
+	TEXTO_PESAJE_4_LINE1$ = "Pesada de reserva"
+	TEXTO_PESAJE_4_LINE2$ = "-"
+	TEXTO_PESAJE_4_LINE3$ = "-"
+	TEXTO_PESAJE_4_LINE4$ = "-"
+	TEXTO_PESAJE_4_LINE5$ = "y presiona print en la bascula."
+	'
+	SALTAR_PESO_NETO_0% = FALSE
+	SALTAR_PESO_NETO_1% = TRUE
+	SALTAR_PESO_NETO_2% = TRUE
+	SALTAR_PESO_NETO_3% = TRUE
+	SALTAR_PESO_NETO_4% = TRUE
+	'
+CASE ELSE
+	MSGBOX "El partcode: " & #PART_CODE#$ & " , no ha sido programado." 
+	EXIT
+END SELECT
+'
+'Existe la posiblidad de no medir el peso de la caja vacia poniendo SALTAR_PESO_CAJA_VACIA% = TRUE y asignando un valor de pesada fija con la variable PESO_CAJA_VACIA_VIRTUAL% = 0
+SALTAR_PESO_CAJA_VACIA% = TRUE
+PESO_CAJA_VACIA_VIRTUAL% = 0
+'
+'
+'****************************************************************************************************************************************
+'****************************************************************************************************************************************
+'****************************************************************************************************************************************
+'****************************************************************************************************************************************
+'****************************************************************************************************************************************
+'
+'
+'
+'
+IF #PREVIOUS_INFO#% = TRUE THEN 
+	SERIAL_CELESTICA$ = "00XXX000000"
+ELSE
+	'
+	'
+	IF #CONTADOR_REPEAT_MAIN#% > 0 THEN
+		'****************************************************************************************************
+		'*********************** Mensaje Imprimiendo ********************************************************
+		'****************************************************************************************************
+		'
+		COLOR_TEXTO% =  RGB(255,255,255)
+		COLOR_FORMULARIO% =  RGB(0,0,0)
+		'
+		FORM (OPEN,50,20,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+		FORM (SHOW_LABEL,1,8,5,"IMPRIMIENDO ETIQUETA",,16,COLOR_TEXTO%)
+		FORM (START_TIMER,1,1000) 
+		FORM (DISPLAY_UNTIL,TIMER_1,)
+		FORM (STOP_TIMER,1)
+		FORM (CLOSE)
+		'
+	END IF
+	'
+	'
+	'
+	' 
+	'****************************************************************************************************
+	'****************************************************************************************************
+	'********** Leemos la serial de la tarjeta ********************************************************
+	'****************************************************************************************************
+	'****************************************************************************************************
+	'
+	FORMULARIO_0:
+	'
+	COLOR_TEXTO% =  RGB(0,0,0)
+	COLOR_FORMULARIO% =  RGB(226,242,111)
+	SERIAL_CELESTICA$ = ""
+	'
+	FORM (OPEN,100,35,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+	FORM (SHOW_LABEL,1,1,1,"Leer serial celestica de la tarjeta:",,16,COLOR_TEXTO%)
+	FORM (SHOW_TEXT,1,25,10,50,4,SERIAL_CELESTICA$,,16,,"SERIAL_CELESTICA$")
+	FORM (SHOW_BUTTOM,1,42,20,15,5,"ACEPTAR","Arial",12,)
+	FORM (DISPLAY_UNTIL,BUTTOM_1;TEXT_1,TEXT_1)
+	FORM (CLOSE) 
+	'
+	SERIAL_CELESTICA$ = UCASE(TRIM(SERIAL_CELESTICA$))
+	IF SERIAL_CELESTICA$ = "" THEN
+		MSGBOX "Es necesario introducir el serial celestica del producto."
+		GOTO FORMULARIO_0
+	END IF
+	'
+	CONSULTA_1$ = SQL("SELECT PART_CODE FROM CARD.HEADER WHERE ETIQUETA = '" & SERIAL_CELESTICA$ & "'","CARDS_PR")
+	IF COUNT_RECORD(CONSULTA_1$) = 0 THEN
+		MSGBOX "El Serial introducido " & SERIAL_CELESTICA$ & " , no existe en la tabla CARD.HEADER."
+		GOTO FORMULARIO_0
+	END IF
+	PART_CODE_CONSULTA$ = TRIM(GET_RECORD_FIELD(CONSULTA_1$,1,1))
+	'
+	IF #PART_CODE#$ <> PART_CODE_CONSULTA$  THEN
+		MSGBOX "El Serial " &  SERIAL_CELESTICA$ & " , no corresponde al part code: " & #PART_CODE#$
+		GOTO FORMULARIO_0
+	END IF
+	'
+	CONSULTA_1$ = SQL("SELECT TSTAMP FROM CARD.CIQSSFC WHERE ETIQUETA  ='" & SERIAL_CELESTICA$ & "'AND SPROD = '" & OPERACION_PREVIA$ & "' AND STATUS = 'P'","CARDS_PR")
+	IF COUNT_RECORD(CONSULTA_1$) = 0 THEN
+		MSGBOX "El Serial introducido " & SERIAL_CELESTICA$ & " , no tiene procesada la operacion previa: " & OPERACION_PREVIA$
+		GOTO FORMULARIO_0
+	END IF
+	'
+	'
+	'	
+	'
+	'****************************************************************************************************************************************
+	'****************************************************************************************************************************************
+	'********************** Proceso para repetir etiquetas **********************************************************************************
+	'****************************************************************************************************************************************
+	'****************************************************************************************************************************************
+	'
+   	ETIQUETA_DUPLICADA% = FALSE
+   	COMENTARIO$ = ""
+	'
+	IF (ACTIVAR_RESTRICCION_AUTORIZADO_REPRINT% = TRUE) THEN
+ 		'
+ 		CONSULTA_2$ = SQL("SELECT COUNT(SERIAL_CUST) AS VECES_IMPRESA FROM ELABELS.ETIQUETAS_LOG WHERE PART_CODE = '" & #PART_CODE#$ & "' AND  TEMPLATE_ID = '" & #TEMPLATE_ID#$ & "' AND SERIAL_CUST = '" & SERIAL_CELESTICA$ & "'","ELAB_PR")
+ 		IF TRIM(GET_RECORD_FIELD(CONSULTA_2$,1,1)) <> "0" THEN
+			'
+			MSGBOX "ATENCION: El SN: " &  SERIAL_CELESTICA$ & ", ya ha sido impreso con anterioridad " & TRIM(GET_RECORD_FIELD(CONSULTA_2$,1,1)) & " veces. Para repetir la esta etiqueta se requiere un usuario autorizado."
+			'
+			COMENTARIO$ = ""
+			FORMULARIO_PASS:	
+			NEXT_FOCUS$ = "TEXT_1"
+			USUARIO_AUTORIZADO$ = ""
+			PASSWORD$ = ""
+			REPETIR_FORMULARIO_PASS:
+			'
+			COLOR_TEXTO% =  RGB(0,0,0)
+			COLOR_FONDO_PASSWORD% =  RGB(0,0,0)
+			COLOR_BOTON1% =  RGB(155,100,111)
+			COLOR_FORMULARIO% =  RGB(155,100,111)
+			' 
+			FORM (OPEN,55,60,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+			FORM (SHOW_LABEL,1,1,1,"Usuario autorizado:",,16,COLOR_TEXTO%)
+			FORM (SHOW_TEXT,1,15,7,30,4,USUARIO_AUTORIZADO$,,16,,"USUARIO_AUTORIZADO$")
+			FORM (SHOW_LABEL,2,1,15,"Password:",,16,COLOR_TEXTO%)
+			FORM (SHOW_TEXT,2,15,22,30,4,PASSWORD$,,16,COLOR_FONDO_PASSWORD%,"PASSWORD$")
+			FORM (SHOW_LABEL,3,1,29,"Seleccione motivo:",,16,COLOR_TEXTO%)
+			FORM (SHOW_COMBO,1,4,36,45,";Etiqueta anterior mal impresa.;Etiqueta anterior deteriorada en el proceso.;Copia adicional requerida por el proceso.;Muestra para el cliente o auditoria.",COMENTARIO$,"Arial",8,,"COMENTARIO$")				
+			FORM (SHOW_BUTTOM,1,22,47,15,5,"ACEPTAR","Arial",12,COLOR_BOTON1%)
+			FORM (DISPLAY_UNTIL,BUTTOM_1;TEXT_1;TEXT_2,NEXT_FOCUS$)
+			FORM (CLOSE)
+			'
+			IF EVENTO_FORMULARIO$ = "TEXT_1" THEN
+				NEXT_FOCUS$ = "TEXT_2"
+			END IF
+			IF EVENTO_FORMULARIO$ = "TEXT_2" THEN
+				NEXT_FOCUS$ = "TEXT_1"
+			END IF
+			'
+			USUARIO_AUTORIZADO$ = TRIM(UCASE(USUARIO_AUTORIZADO$))
+			PASSWORD$ = TRIM(PASSWORD$)
+			COMENTARIO$ = LEFT(TRIM(REPLACE(COMENTARIO$,"'"," ")),150)
+			'
+			IF INSTR(("," & TRIM(UCASE(LISTA_USUARIO_AUTORIZADO_REPRINT$)) & ","), ("," &  USUARIO_AUTORIZADO$ & ",")) = 0 THEN		
+     				MSGBOX "Usuario " & USUARIO_AUTORIZADO$ & " no tiene privilegios para repetir etiquetas."
+		       	GOTO FORMULARIO_PASS
+			END IF			
+			'
+			IF (USUARIO_AUTORIZADO$ = "") OR (PASSWORD$ = "") THEN
+				GOTO REPETIR_FORMULARIO_PASS
+			END IF
+			'
+			IF (COMENTARIO$ = "") THEN
+     				MSGBOX "Es obligatorio indicar el motivo por el que se repite la etiqueta. Complete la casilla de comentario."
+				GOTO REPETIR_FORMULARIO_PASS
+			END IF
+		       '
+		       IF IS_VALID_ACCOUNT(USUARIO_AUTORIZADO$,PASSWORD$,"europe.ad.celestica.com") = FALSE THEN
+     				MSGBOX "Usuario o password no valido."
+		       	GOTO FORMULARIO_PASS
+		       END IF
+			'
+			'CONSULTA_3$ = SQL("SELECT MIN(TSTAMP) FROM ELABELS.ETIQUETAS_LOG WHERE PART_CODE = '" & #PART_CODE#$ & "' AND TEMPLATE_ID = '" & #TEMPLATE_ID#$ & "' AND SERIAL_CUST = '" & SERIAL_CELESTICA$ & "'","ELAB_PR")
+			'FECHA_PRIMERA_IMPRESION$ = LEFT(CONSULTA_3$,10)
+			'
+			#LOG_VARIOUS_DATA#$ = "Duplicado autorizado por: " & USUARIO_AUTORIZADO$
+			'
+			ETIQUETA_DUPLICADA% = TRUE	
+		END IF
+		'
+		'
+		IF ETIQUETA_DUPLICADA% = TRUE THEN
+			#LOG_REASON_REPRINT#$ = COMENTARIO$
+		END IF
+		'
+		'
+	END IF
+	'
+	'
+	'
+	'****************************************************************************************************************************************
+	'****************************************************************************************************************************************
+	'********************** LECTURAS DE PESAJE EN LA BASCULA  ******************************************************************************
+	'****************************************************************************************************************************************
+	'****************************************************************************************************************************************
+	'
+	'
+	'
+	FORMULARIO_2:
+	IF SALTAR_PESO_CAJA_VACIA% = TRUE THEN
+		PESO_CAJA_VACIA% = PESO_CAJA_VACIA_VIRTUAL% * 1000
+		GOTO FIN_FORMULARIO_2
+	END IF
+	'
+	COLOR_TEXTO% =  RGB(0,0,0)
+	COLOR_FORMULARIO% =  RGB(186,240,185)
+	PESO_CAJA_VACIA% = 0
+	PESO_CAJA_VACIA_CORRECTO% = FALSE
+	'
+	FORM (OPEN,100,50,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+	FORM (SHOW_LABEL,1,20,5,TEXTO_PESAJE_CAJA_LINE1$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,2,20,15,TEXTO_PESAJE_CAJA_LINE2$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,3,20,20,TEXTO_PESAJE_CAJA_LINE3$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,4,20,25,TEXTO_PESAJE_CAJA_LINE4$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,5,20,35,TEXTO_PESAJE_CAJA_LINE5$,,16,COLOR_TEXTO%)
+	'
+	WHILE ((EVENTO_FORMULARIO$ = "TIMER_1") OR (EVENTO_FORMULARIO$ = "")) AND (PESO_CAJA_VACIA% = 0)
+		FORM (START_TIMER,1,1000) 
+		FORM (DISPLAY_UNTIL,TIMER_1,)
+		IF EVENTO_FORMULARIO$ = "TIMER_1" THEN
+			CONSULTA_1$ = LOAD_FILE(FICHERO_INTERCAMBIO$)
+			IF (CONSULTA_1$ <> "#FILE_NO_FOUND#") AND (CONSULTA_1$ <> "#FILE_ERROR#")  AND (CONSULTA_1$ <> "Error") AND (CONSULTA_1$ <> "") THEN
+				IF VAL(DATEDIFF("S",TRIM(GET_ARRAY(CONSULTA_1$,"×~×",1)),NOW("YYYY-MM-DD HH:MM:SS"))) < 4 THEN
+					DELETE_FILE (FICHERO_INTERCAMBIO$)
+					PESO_CAJA_VACIA% = VAL(TRIM(GET_ARRAY(CONSULTA_1$,"×~×",0)))
+					IF ((PESO_CAJA_VACIA%) > (LIMITE_SUPERIOR_CAJA_VACIA% * 1000)) OR ((PESO_CAJA_VACIA%) < (LIMITE_INFERIOR_CAJA_VACIA% * 1000)) THEN
+						MSGBOX "El peso de la caja vacia es: " & STR((PESO_CAJA_VACIA%/1000)) & CHR(10) & "Debe estar entre : " & STR(LIMITE_SUPERIOR_CAJA_VACIA%) & " y " & STR(LIMITE_INFERIOR_CAJA_VACIA%)
+						GOTO FORMULARIO_2
+					END IF
+				END IF 
+			END IF
+		END IF
+	WEND
+	FORM (STOP_TIMER,1)
+	FORM (CLOSE)
+	'
+	FIN_FORMULARIO_2:
+	'
+	'
+	'
+	FORMULARIO_7:
+	IF SALTAR_PESO_NETO_0% = TRUE THEN
+		PESO_NETO_0% = 0
+		GOTO FIN_FORMULARIO_7
+	END IF
+	'
+	COLOR_TEXTO% =  RGB(0,0,0)
+	COLOR_FORMULARIO% =  RGB(206,181,107)
+	PESO_NETO_0% = 0
+	'
+	FORM (OPEN,100,50,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+	FORM (SHOW_LABEL,1,20,5,TEXTO_PESAJE_0_LINE1$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,2,20,15,TEXTO_PESAJE_0_LINE2$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,3,20,20,TEXTO_PESAJE_0_LINE3$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,4,20,25,TEXTO_PESAJE_0_LINE4$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,5,20,35,TEXTO_PESAJE_0_LINE5$,,16,COLOR_TEXTO%)
+	'	
+	WHILE ((EVENTO_FORMULARIO$ = "TIMER_1") OR (EVENTO_FORMULARIO$ = "")) AND (PESO_NETO_0% = 0)
+		FORM (START_TIMER,1,1000) 
+		FORM (DISPLAY_UNTIL,TIMER_1,)
+		IF EVENTO_FORMULARIO$ = "TIMER_1" THEN
+			CONSULTA_1$ = LOAD_FILE(FICHERO_INTERCAMBIO$)
+			IF (CONSULTA_1$ <> "#FILE_NO_FOUND#") AND (CONSULTA_1$ <> "#FILE_ERROR#")  AND (CONSULTA_1$ <> "Error") AND (CONSULTA_1$ <> "") THEN
+				IF VAL(DATEDIFF("S",TRIM(GET_ARRAY(CONSULTA_1$,"×~×",1)),NOW("YYYY-MM-DD HH:MM:SS"))) < 4 THEN
+					DELETE_FILE (FICHERO_INTERCAMBIO$)
+					PESO_NETO_0% = (VAL(TRIM(GET_ARRAY(CONSULTA_1$,"×~×",0)))) - PESO_CAJA_VACIA%
+					IF ((PESO_NETO_0%) > (LIMITE_SUPERIOR_PESO_NETO_0% * 1000)) OR ((PESO_NETO_0%) < (LIMITE_INFERIOR_PESO_NETO_0% * 1000)) THEN
+						MSGBOX "El peso neto del cable y guia de usuario (1º Piso) es: " & STR((PESO_NETO_0%/1000)) & CHR(10) & "Debe estar entre : " & STR(LIMITE_SUPERIOR_PESO_NETO_0%) & " y " & STR(LIMITE_INFERIOR_PESO_NETO_0%)
+						GOTO FORMULARIO_7
+					END IF
+				END IF 
+			END IF
+		END IF
+	WEND
+	FORM (STOP_TIMER,1)
+	FORM (CLOSE)
+	'
+	FIN_FORMULARIO_7:
+	'
+	'
+	'
+	FORMULARIO_3:
+	IF SALTAR_PESO_NETO_1% = TRUE THEN
+		PESO_NETO_1% = 0
+		GOTO FIN_FORMULARIO_3
+	END IF
+	'
+	COLOR_TEXTO% =  RGB(0,0,0)
+	COLOR_FORMULARIO% =  RGB(206,121,57)
+	PESO_NETO_1% = 0
+	'
+	FORM (OPEN,100,50,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+	FORM (SHOW_LABEL,1,20,5,TEXTO_PESAJE_1_LINE1$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,2,20,15,TEXTO_PESAJE_1_LINE2$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,3,20,20,TEXTO_PESAJE_1_LINE3$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,4,20,25,TEXTO_PESAJE_1_LINE4$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,5,20,35,TEXTO_PESAJE_1_LINE5$,,16,COLOR_TEXTO%)
+	'		
+	WHILE ((EVENTO_FORMULARIO$ = "TIMER_1") OR (EVENTO_FORMULARIO$ = "")) AND (PESO_NETO_1% = 0)
+		FORM (START_TIMER,1,1000) 
+		FORM (DISPLAY_UNTIL,TIMER_1,)
+		IF EVENTO_FORMULARIO$ = "TIMER_1" THEN
+			CONSULTA_1$ = LOAD_FILE(FICHERO_INTERCAMBIO$)
+			IF (CONSULTA_1$ <> "#FILE_NO_FOUND#") AND (CONSULTA_1$ <> "#FILE_ERROR#")  AND (CONSULTA_1$ <> "Error") AND (CONSULTA_1$ <> "") THEN
+				IF VAL(DATEDIFF("S",TRIM(GET_ARRAY(CONSULTA_1$,"×~×",1)),NOW("YYYY-MM-DD HH:MM:SS"))) < 4 THEN
+					DELETE_FILE (FICHERO_INTERCAMBIO$)
+					PESO_NETO_1% = (VAL(TRIM(GET_ARRAY(CONSULTA_1$,"×~×",0)))) - (PESO_CAJA_VACIA% + PESO_NETO_0%)
+					IF ((PESO_NETO_1%) > (LIMITE_SUPERIOR_PESO_NETO_1% * 1000)) OR ((PESO_NETO_1%) < (LIMITE_INFERIOR_PESO_NETO_1% * 1000)) THEN
+						MSGBOX "El peso neto los folletos (1º Piso) es: " & STR((PESO_NETO_1%/1000)) & CHR(10) & "Debe estar entre : " & STR(LIMITE_SUPERIOR_PESO_NETO_1%) & " y " & STR(LIMITE_INFERIOR_PESO_NETO_1%)
+						GOTO FORMULARIO_3
+					END IF
+				END IF 
+			END IF
+		END IF
+	WEND
+	FORM (STOP_TIMER,1)
+	FORM (CLOSE)
+	'
+	FIN_FORMULARIO_3:
+	'
+	'
+	'
+	FORMULARIO_4:
+	IF SALTAR_PESO_NETO_2% = TRUE THEN
+		PESO_NETO_2% = 0
+		GOTO FIN_FORMULARIO_4
+	END IF
+	'
+	COLOR_TEXTO% =  RGB(0,0,0)
+	COLOR_FORMULARIO% =  RGB(166,135,218)
+	PESO_NETO_2% = 0
+	'
+	FORM (OPEN,100,50,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+	FORM (SHOW_LABEL,1,20,5,TEXTO_PESAJE_2_LINE1$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,2,20,15,TEXTO_PESAJE_2_LINE2$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,3,20,20,TEXTO_PESAJE_2_LINE3$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,4,20,25,TEXTO_PESAJE_2_LINE4$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,5,20,35,TEXTO_PESAJE_2_LINE5$,,16,COLOR_TEXTO%)
+	'
+	WHILE ((EVENTO_FORMULARIO$ = "TIMER_1") OR (EVENTO_FORMULARIO$ = "")) AND (PESO_NETO_2% = 0)
+		FORM (START_TIMER,1,1000) 
+		FORM (DISPLAY_UNTIL,TIMER_1,)
+		IF EVENTO_FORMULARIO$ = "TIMER_1" THEN
+			CONSULTA_1$ = LOAD_FILE(FICHERO_INTERCAMBIO$)
+			IF (CONSULTA_1$ <> "#FILE_NO_FOUND#") AND (CONSULTA_1$ <> "#FILE_ERROR#")  AND (CONSULTA_1$ <> "Error") AND (CONSULTA_1$ <> "") THEN
+				IF VAL(DATEDIFF("S",TRIM(GET_ARRAY(CONSULTA_1$,"×~×",1)),NOW("YYYY-MM-DD HH:MM:SS"))) < 4 THEN
+					DELETE_FILE (FICHERO_INTERCAMBIO$)
+					PESO_NETO_2% = (VAL(TRIM(GET_ARRAY(CONSULTA_1$,"×~×",0)))) - (PESO_CAJA_VACIA% + PESO_NETO_0% + PESO_NETO_1%)
+					IF ((PESO_NETO_2%) > (LIMITE_SUPERIOR_PESO_NETO_2% * 1000)) OR ((PESO_NETO_2%) < (LIMITE_INFERIOR_PESO_NETO_2% * 1000)) THEN
+						MSGBOX "El peso neto los accesorios 2º Piso es: " & STR((PESO_NETO_2%/1000)) & CHR(10) & "Debe estar entre : " & STR(LIMITE_SUPERIOR_PESO_NETO_2%) & " y " & STR(LIMITE_INFERIOR_PESO_NETO_2%)
+						GOTO FORMULARIO_4
+					END IF
+				END IF 
+			END IF
+		END IF
+	WEND
+	FORM (STOP_TIMER,1)
+	FORM (CLOSE)
+	'
+	FIN_FORMULARIO_4:
+	'
+	'
+	FORMULARIO_5:
+	IF SALTAR_PESO_NETO_3% = TRUE THEN
+		PESO_NETO_3% = 0
+		GOTO FIN_FORMULARIO_5
+	END IF
+	'
+	COLOR_TEXTO% =  RGB(0,0,0)
+	COLOR_FORMULARIO% =  RGB(166,235,118)
+	PESO_NETO_3% = 0
+	'
+	FORM (OPEN,100,50,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+	FORM (SHOW_LABEL,1,20,5,TEXTO_PESAJE_3_LINE1$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,2,20,15,TEXTO_PESAJE_3_LINE2$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,3,20,20,TEXTO_PESAJE_3_LINE3$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,4,20,25,TEXTO_PESAJE_3_LINE4$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,5,20,35,TEXTO_PESAJE_3_LINE5$,,16,COLOR_TEXTO%)
+	'
+	WHILE ((EVENTO_FORMULARIO$ = "TIMER_1") OR (EVENTO_FORMULARIO$ = "")) AND (PESO_NETO_3% = 0)
+		FORM (START_TIMER,1,1000) 
+		FORM (DISPLAY_UNTIL,TIMER_1,)
+		IF EVENTO_FORMULARIO$ = "TIMER_1" THEN
+			CONSULTA_1$ = LOAD_FILE(FICHERO_INTERCAMBIO$)
+			IF (CONSULTA_1$ <> "#FILE_NO_FOUND#") AND (CONSULTA_1$ <> "#FILE_ERROR#")  AND (CONSULTA_1$ <> "Error") AND (CONSULTA_1$ <> "") THEN
+				IF VAL(DATEDIFF("S",TRIM(GET_ARRAY(CONSULTA_1$,"×~×",1)),NOW("YYYY-MM-DD HH:MM:SS"))) < 4 THEN
+					DELETE_FILE (FICHERO_INTERCAMBIO$)
+					PESO_NETO_3% = (VAL(TRIM(GET_ARRAY(CONSULTA_1$,"×~×",0)))) - (PESO_CAJA_VACIA% + PESO_NETO_0% + PESO_NETO_1% + PESO_NETO_2%)
+					IF ((PESO_NETO_3%) > (LIMITE_SUPERIOR_PESO_NETO_3% * 1000)) OR ((PESO_NETO_3%) < (LIMITE_INFERIOR_PESO_NETO_3% * 1000)) THEN
+						MSGBOX "El peso neto de la funda de la caja es: " & STR((PESO_NETO_3%/1000)) & CHR(10) & "Debe estar entre : " & STR(LIMITE_SUPERIOR_PESO_NETO_3%) & " y " & STR(LIMITE_INFERIOR_PESO_NETO_3%)
+						GOTO FORMULARIO_5
+					END IF
+				END IF 
+			END IF
+		END IF
+	WEND
+	FORM (STOP_TIMER,1)
+	FORM (CLOSE)
+	'
+	FIN_FORMULARIO_5:
+	'
+	'
+	FORMULARIO_6:
+	IF SALTAR_PESO_NETO_4% = TRUE THEN
+		PESO_NETO_4% = 0
+		GOTO FIN_FORMULARIO_6
+	END IF
+	'
+	COLOR_TEXTO% =  RGB(0,0,0)
+	COLOR_FORMULARIO% =  RGB(266,235,118)
+	PESO_NETO_4% = 0
+	'
+	FORM (OPEN,100,50,COLOR_FORMULARIO%,"EVENTO_FORMULARIO$")
+	FORM (SHOW_LABEL,1,20,5,TEXTO_PESAJE_4_LINE1$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,2,20,15,TEXTO_PESAJE_4_LINE2$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,3,20,20,TEXTO_PESAJE_4_LINE3$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,4,20,25,TEXTO_PESAJE_4_LINE4$,,16,COLOR_TEXTO%)
+	FORM (SHOW_LABEL,5,20,35,TEXTO_PESAJE_4_LINE5$,,16,COLOR_TEXTO%)
+	'
+	WHILE ((EVENTO_FORMULARIO$ = "TIMER_1") OR (EVENTO_FORMULARIO$ = "")) AND (PESO_NETO_4% = 0)
+		FORM (START_TIMER,1,1000) 
+		FORM (DISPLAY_UNTIL,TIMER_1,)
+		IF EVENTO_FORMULARIO$ = "TIMER_1" THEN
+			CONSULTA_1$ = LOAD_FILE(FICHERO_INTERCAMBIO$)
+			IF (CONSULTA_1$ <> "#FILE_NO_FOUND#") AND (CONSULTA_1$ <> "#FILE_ERROR#")  AND (CONSULTA_1$ <> "Error") AND (CONSULTA_1$ <> "") THEN
+				IF VAL(DATEDIFF("S",TRIM(GET_ARRAY(CONSULTA_1$,"×~×",1)),NOW("YYYY-MM-DD HH:MM:SS"))) < 4 THEN
+					DELETE_FILE (FICHERO_INTERCAMBIO$)
+					PESO_NETO_4% = (VAL(TRIM(GET_ARRAY(CONSULTA_1$,"×~×",0)))) - (PESO_CAJA_VACIA% + PESO_NETO_0% + PESO_NETO_1% + PESO_NETO_2% + PESO_NETO_3%)
+					IF ((PESO_NETO_4%) > (LIMITE_SUPERIOR_PESO_NETO_4% * 1000)) OR ((PESO_NETO_4%) < (LIMITE_INFERIOR_PESO_NETO_4% * 1000)) THEN
+						MSGBOX "El peso neto la reserva es: " & STR((PESO_NETO_4%/1000)) & CHR(10) & "Debe estar entre : " & STR(LIMITE_SUPERIOR_PESO_NETO_4%) & " y " & STR(LIMITE_INFERIOR_PESO_NETO_4%)
+						GOTO FORMULARIO_6
+					END IF
+				END IF 
+			END IF
+		END IF
+	WEND
+	FORM (STOP_TIMER,1)
+	FORM (CLOSE)
+	'
+	FIN_FORMULARIO_6:
+	
+	'
+	'****************************************************************************************************
+	'****************************************************************************************************
+	'**********  Registramos las pesadas  ***************************************************************
+	'****************************************************************************************************
+	'****************************************************************************************************
+	'
+	'
+	PESO_NETO% =  PESO_NETO_0% + PESO_NETO_1% + PESO_NETO_2% + PESO_NETO_3% + PESO_NETO_4%
+	'
+	'Tambien guardamos los datos de las pesadas y sus limites en el campo DATOS_VARIOS del ELABELS.ETIQUETAS_LOG 
+	#LOG_VARIOUS_DATA#$ =  ""
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "P_Total=" & STR((PESO_CAJA_VACIA% + PESO_NETO_0% + PESO_NETO_1% + PESO_NETO_2% + PESO_NETO_3%)/1000000)
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|P1=" & STR((PESO_CAJA_VACIA%/1000000))
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|L1=(" & STR(LIMITE_INFERIOR_CAJA_VACIA%/1000) & "-->" & STR(LIMITE_SUPERIOR_CAJA_VACIA%/1000) & ")"
+	#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|P2=" & STR((PESO_NETO_0%/1000000))
+	#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|L2=(" & STR(LIMITE_INFERIOR_PESO_NETO_0%/1000) & "-->" & STR(LIMITE_SUPERIOR_PESO_NETO_0%/1000) & ")"
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|P3=" & STR((PESO_NETO_1%/1000000))
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|L3=(" & STR(LIMITE_INFERIOR_PESO_NETO_1%/1000) & "-->" & STR(LIMITE_SUPERIOR_PESO_NETO_1%/1000) & ")"
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|P4=" & STR((PESO_NETO_2%/1000000))
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|L4=(" & STR(LIMITE_INFERIOR_PESO_NETO_2%/1000) & "-->" & STR(LIMITE_SUPERIOR_PESO_NETO_2%/1000) & ")"
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|P5=" & STR((PESO_NETO_3%/1000000))
+	'#LOG_VARIOUS_DATA#$ =  #LOG_VARIOUS_DATA#$ & "|~|L5=(" & STR(LIMITE_INFERIOR_PESO_NETO_3%/1000) & "-->" & STR(LIMITE_SUPERIOR_PESO_NETO_3%/1000) & ")"
+	'
+	'
+	'
+	'Registramos el PASS de la operacion 0229
+	OPERACION_PASS$ = "0229"
+	Familia$ = SQL("SELECT FAMILIA FROM CARD.CPARTCODE WHERE PARTCODE = '" & #PART_CODE#$ & "'","CARDS_PR")
+	'
+   	CONSULTA_1$ = UCASE(TRIM(SQL("SELECT MAX(DEFSEQ) FROM CARD.CIQSSFC WHERE ETIQUETA  ='" & SERIAL_CELESTICA$ &  "'","CARDS_PR")))
+	IF  ISNUMERIC(CONSULTA_1$) THEN
+		DEFSEQ$ = STR(VAL(TRIM(GET_RECORD_FIELD(CONSULTA_1$,1,1))) + 1)	
+	ELSE			
+		DEFSEQ$ = "0"	
+	END IF
+
+	SQL_WRITE ("INSERT INTO CARD.CIQSSFC(ETIQUETA,PART_CODE,CELDA,USUARIO,DEFCODE,QTY,DEFSEQ,SPROD,STATUS,TSTAMP,F_ARCHIVO,COMENTARIO,SUB_CARD,REF_DES,FAILCODE,COMP_PN,F1,LINEA,COMP_SN) VALUES ('" &  SERIAL_CELESTICA$ & "','" & #PART_CODE#$ & "','" & #COMPUTER#$ & "','" & #USER#$ & "','IQS','1','" & DEFSEQ$ & "','" & OPERACION_PASS$ & "','P',CURRENT TIMESTAMP,'1','Peso_Neto=" & STR((PESO_NETO%/1000000)) & "','" & Familia$ & "','','','','0','CARD','')","CARDS_PR")
+	'
+	'
+	'
+	SIN_PESADA:
+	'
+	IF ETIQUETA_DUPLICADA% = TRUE THEN
+		#LOG_REASON_REPRINT#$ = COMENTARIO$
+	END IF
+	'
+END IF
+'
+'
+'Activamos registro especial del contenido de la etiqueta para Jobs que generan serialización: 
+#LOG_ACTIVED#% = TRUE
+'
+'
+
+
+Øø<CR>øØLT_20240806124117Øø<CC>øØIMPRESORASØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ|~|~|BEGIN_PRINTER|~|~|1|~|~|N/A|~|~|N / A|~|~|C:\CPCWIN\PRINTER_DUMMY.TXTØø<CR>øØLT_20240806124117Øø<CC>øØPARCODE_ASOCIACIONØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ"AWO"Øø<CR>øØLT_20240806124117Øø<CC>øØTEMPLATE_CODESOFTØø<CC>øØ0Øø<CC>øØ2Øø<CC>øØ|~|~|BEGIN_FILE_PRINT|~|~|F01|~|~|ZEBRA|~|~|1|~|~|1|~|~|^XA
+^MCY
+^XZ
+^XA
+^XFR:TEMP_FMT.ZPL
+^A0N,30,30^FO50,30^FDLINE1$^FS
+^PQ1,0,1,Y
+^XZ
+^XA
+^IDR:TEMP_FMT.ZPL
+^XZ
+Øø<CT>øØØø<CT>øØØø<CT>øØELABELS.ETIQUETAS_CONSUMIBLESØø<IN>øØPN_CONSUMIBLEØø<IC>øØTYPE_INFOØø<IC>øØSEQØø<IC>øØTYPE_PNØø<IC>øØF_ARCHIVOØø<IC>øØTEXTOØø<IT>øØN/AØø<CC>øØDESCRIPCIONØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØNo se usa etiquetaØø<CR>øØN/AØø<CC>øØDESCRIPCIONØø<CC>øØ1Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØN/AØø<CR>øØN/AØø<CC>øØDESCRIPCIONØø<CC>øØ2Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØN/AØø<CR>øØN/AØø<CC>øØANCHO_ROLLOØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØ0.1Øø<CR>øØN/AØø<CC>øØANCHO_ETIQUETAØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØ0.1Øø<CR>øØN/AØø<CC>øØALTO_ETIQUETAØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØ0.1Øø<CR>øØN/AØø<CC>øØCOLUMNAS_ETIQUETAØø<CC>øØ0Øø<CC>øØROLLO ETIQUETASØø<CC>øØ2Øø<CC>øØ1Øø<CR>øØN / AØø<CC>øØDESCRIPCIONØø<CC>øØ0Øø<CC>øØRIBBONØø<CC>øØ2Øø<CC>øØN/AØø<CR>øØN / AØø<CC>øØDESCRIPCIONØø<CC>øØ1Øø<CC>øØRIBBONØø<CC>øØ2Øø<CC>øØNo se usa ribbonØø<CR>øØN / AØø<CC>øØANCHO_ROLLOØø<CC>øØ0Øø<CC>øØRIBBONØø<CC>øØ2Øø<CC>øØ0.1Øø<CR>øØN / AØø<CC>øØLONGITUD_ROLLOØø<CC>øØ0Øø<CC>øØRIBBONØø<CC>øØ2Øø<CC>øØ0.1
